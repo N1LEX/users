@@ -27,7 +27,7 @@ func UserCreateHandler(c *gin.Context) {
 	}
 
 	// Create user
-	user, err := m.CreateUser(&form)
+	user, err := m.CreateUser(form.Parse())
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"errors": err,

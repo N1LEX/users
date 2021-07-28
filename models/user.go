@@ -1,11 +1,8 @@
 package models
 
 import (
-	"butaforia.io/forms"
 	"butaforia.io/token"
-	"crypto/sha256"
-	"encoding/base64"
-	"encoding/json"
+	"butaforia.io/utils"
 	"github.com/cristalhq/jwt/v3"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -54,8 +51,7 @@ func GetByUsername(username string) (*User, error) {
 	return u, nil
 }
 
-func CreateUser(postForm *forms.UserCreateForm) (*User, error) {
-	u := ParseCreateForm(postForm)
+func CreateUser(u *User) (*User, error) {
 	u.SetPassword()
 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	tx := db.Table("users").Create(u)
@@ -63,15 +59,6 @@ func CreateUser(postForm *forms.UserCreateForm) (*User, error) {
 		return nil, tx.Error
 	}
 	return u, nil
-}
-
-func ParseCreateForm(f *forms.UserCreateForm) *User {
-	var u User
-	data, _ := json.Marshal(f)
-	if err := json.Unmarshal(data, &u); err != nil {
-		panic(err)
-	}
-	return &u
 }
 
 func (u *User) GetStandardClaims() *jwt.StandardClaims {
@@ -93,10 +80,7 @@ func (u *User) NewRefreshToken() string {
 }
 
 func (u *User) SetPassword() {
-	p := []byte(u.Password)
-	h := sha256.New()
-	h.Write(p)
-	u.Password = base64.URLEncoding.EncodeToString(h.Sum(nil))
+	u.Password = utils.Hash(u.Password)
 }
 
 func (u *User) IsValidCredentials(username, password string) bool {

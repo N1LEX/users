@@ -2,8 +2,6 @@ package token
 
 import (
 	"butaforia.io/utils"
-	"crypto/sha1"
-	"encoding/base64"
 	"encoding/json"
 	"github.com/cristalhq/jwt/v3"
 )
@@ -21,10 +19,7 @@ func GenerateToken(claims interface{}) string {
 }
 
 func GenerateTokenID() string {
-	s := []byte("random-unique-string")
-	h := sha1.New()
-	h.Write(s)
-	return base64.URLEncoding.EncodeToString(h.Sum(nil))
+	return utils.Hash("random-unique-string")
 }
 
 func ParseTokenClaims(tokenStr string) *jwt.StandardClaims {

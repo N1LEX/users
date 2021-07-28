@@ -1,5 +1,10 @@
 package forms
 
+import (
+	"butaforia.io/models"
+	"encoding/json"
+)
+
 type ValidationError map[string]string
 type ValidationErrors map[string]ValidationError
 type Validator func() ValidationError
@@ -10,6 +15,15 @@ type UserCreateForm struct {
 	PasswordConfirm string `form:"password2" binding:"required"`
 	Email           string `form:"email" binding:"required"`
 	InviteCode      string `form:"inviteCode"`
+}
+
+func (f *UserCreateForm) Parse() *models.User {
+	var u models.User
+	data, _ := json.Marshal(f)
+	if err := json.Unmarshal(data, &u); err != nil {
+		panic(err)
+	}
+	return &u
 }
 
 func (f *UserCreateForm) GetValidators() map[string]Validator {
