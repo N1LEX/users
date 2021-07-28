@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-
 func AuthUserData(c *gin.Context) {
 	tokenData := c.GetHeader("Authorization")
 	tokenValue := strings.Split(tokenData, " ")[1]

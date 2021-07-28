@@ -14,33 +14,33 @@ import (
 
 type User struct {
 	BaseModel
-	Username       string    `json:"username",gorm:"uniqueIndex"`
-	Password       string    `gorm:"size:255,not null"`
-	Email          string    `json:"email",gorm:"size:255,unique,not null"`
-	ActivationCode string    `gorm:"size:20,unique"`
-	InviteCode     string    `gorm:"size:20,unique"`
-	Warnings       uint8     `json:"warnings"`
-	IsBanned       bool      `json:"isBanned"`
-	IsAdmin        bool      `json:"isAdmin"`
+	Username       string `json:"username",gorm:"uniqueIndex"`
+	Password       string `gorm:"size:255,not null"`
+	Email          string `json:"email",gorm:"size:255,unique,not null"`
+	ActivationCode string `gorm:"size:20,unique"`
+	InviteCode     string `gorm:"size:20,unique"`
+	Warnings       uint8  `json:"warnings"`
+	IsBanned       bool   `json:"isBanned"`
+	IsAdmin        bool   `json:"isAdmin"`
 }
 
 type UserShortData struct {
 	BaseModel
-	Username       string    `json:"username"`
-	Email          string    `json:"email"`
-	Warnings       uint8     `json:"warnings"`
-	IsBanned       bool      `json:"isBanned"`
-	IsAdmin        bool      `json:"isAdmin"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Warnings uint8  `json:"warnings"`
+	IsBanned bool   `json:"isBanned"`
+	IsAdmin  bool   `json:"isAdmin"`
 }
 
-func (u *User) GetShortData() *UserShortData{
+func (u *User) GetShortData() *UserShortData {
 	return &UserShortData{
 		BaseModel: u.BaseModel,
-		Username: u.Username,
-		Email: u.Email,
-		Warnings: u.Warnings,
-		IsBanned: u.IsBanned,
-		IsAdmin: u.IsAdmin,
+		Username:  u.Username,
+		Email:     u.Email,
+		Warnings:  u.Warnings,
+		IsBanned:  u.IsBanned,
+		IsAdmin:   u.IsAdmin,
 	}
 }
 

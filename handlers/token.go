@@ -30,7 +30,7 @@ func NewToken(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"accessToken": user.NewAccessToken(),
+		"accessToken":  user.NewAccessToken(),
 		"refreshToken": user.NewRefreshToken(),
 	})
 

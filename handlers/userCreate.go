@@ -21,7 +21,7 @@ func UserCreateHandler(c *gin.Context) {
 	// Validating form
 	if errs := form.Validate(); errs != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"errors":  errs,
+			"errors": errs,
 		})
 		return
 	}
